@@ -36,9 +36,9 @@ get_main_quantiles <- function(){
 
 download_and_export_income_distribution <- function(export_path){
   wid_df <- download_wid(
-    indicators = "tptinc",        # "t" is for threshold, "ptinc" is for income
-    areas = "WO",                 # "WO" means the entire world
-    years = c(2021),              # 2021 is the latest available date as of 2023
+    indicators = "tptinc",     # "t" : threshold, "ptinc" : pre-tax income
+    areas = "WO",              # "WO" means the entire world
+    years = c(2021),           # 2021 is the latest available date as of 06-2023
     perc = get_main_quantiles(),
     ages = "all",
     pop = "all",
