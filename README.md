@@ -1,7 +1,7 @@
 # HowRichAmI_API_AEF
 API for data processing on the French version of the "How rich am I ?"
 
-# Documentation
+<h2 style="color:red;">Documentation</h2>
 
 
 
