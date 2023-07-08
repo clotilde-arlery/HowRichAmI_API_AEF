@@ -12,12 +12,12 @@ with open(chemin) as f:
 # give the position of someone in world income distribution : return the percentile
 @app.get("/income_positionning")
 def income_positionning(income: int):
-    percentile = []
+    percentile = -1
     for i in range(len(income_distrib)):
         if income < income_distrib[i]["threshold"]:
-            percentile.append(i)
+            percentile = i
             break
-    if percentile == []:
+    if percentile == -1:
         percentile = 100
     return percentile
 
