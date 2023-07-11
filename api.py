@@ -1,9 +1,15 @@
 from fastapi import FastAPI
 import uvicorn
 import json
+import platform
+import os
 
 app = FastAPI()
-chemin = "D:\Assos\AltruismeEfficace\HRAI\data_processed.json"
+
+if platform.system() == 'windows':
+    chemin = os.getcwd() + '\data_processed.json'
+else:
+    chemin = os.getcwd() + '/data_processed.json'
 
 with open(chemin) as f:
     pre = f.read()
