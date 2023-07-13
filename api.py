@@ -1,26 +1,22 @@
 from fastapi import FastAPI
 import uvicorn
-import json
 from pathlib import Path
+import pandas as pd
 
 app = FastAPI()
 
 data_path = Path("data_processed.json")
-
-with open(data_path) as f:
-    pre = f.read()
-    income_distrib = json.loads(pre)
+income_df = pd.read_json(data_path)
 
 # give the position of someone in world income distribution : return the percentile
 @app.get("/income_positionning")
 def income_positionning(income: int):
-    percentile = -1
-    for i in range(len(income_distrib)):
-        if income < income_distrib[i]["threshold"]:
-            percentile = i
-            break
-    if percentile == -1:
-        percentile = 100
+    percentile = (
+        income_df
+        .query(f"threshold <= {income}")
+        .percentile
+        .tail(1).item()
+    )
     return percentile
 
 # give the position of someone in the world income distribution with a given amount of donation : return the percentile
