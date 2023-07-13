@@ -29,7 +29,7 @@ def get_post_donation_percentile(income: int, donation:int):
     return post_donation_percentile
 
 
-@app.get("/tax_exempted_donation")
+@app.get("/post_deduction_donation")
 def get_post_deduction_donation(income: int, donation: int):
     """Give the real amount of donation after tax exemption in (%)"""
     if donation < 0 or donation > 100:
