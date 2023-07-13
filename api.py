@@ -1,17 +1,13 @@
 from fastapi import FastAPI
 import uvicorn
 import json
-import platform
-import os
+from pathlib import Path
 
 app = FastAPI()
 
-if platform.system() == 'windows':
-    chemin = os.getcwd() + '\data_processed.json'
-else:
-    chemin = os.getcwd() + '/data_processed.json'
+data_path = Path("data_processed.json")
 
-with open(chemin) as f:
+with open(data_path) as f:
     pre = f.read()
     income_distrib = json.loads(pre)
 
