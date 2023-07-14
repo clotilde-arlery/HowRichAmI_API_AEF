@@ -19,6 +19,7 @@ def get_percentile(income):
     )
     return percentile
 
+
 @app.get("/equivalent_household_size")
 def get_equivalent_household_size(n_adults, n_children):
     """Get equivalent household size using the OECD modified scale"""
