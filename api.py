@@ -8,8 +8,8 @@ app = FastAPI()
 data_path = Path("data_processed.json")
 income_df = pd.read_json(data_path)
 
-@app.get("/percentile")
-def get_percentile(income: int) -> int:
+
+def get_percentile(income):
     """Give the position of someone in the world income distribution"""
     percentile = (
         income_df
@@ -18,6 +18,40 @@ def get_percentile(income: int) -> int:
         .tail(1).item()
     )
     return percentile
+
+
+@app.get("/equivalent_household_size")
+def get_equivalent_household_size(n_adults, n_children):
+    """Get equivalent household size using the OECD modified scale"""
+    first_adult_weight = 1
+    other_adult_weight = 0.5
+    child_weight = 0.3
+    
+    if n_adults <= 1:
+        equivalent_household_size = (first_adult_weight * n_adults
+                                     + child_weight * n_children)
+    else:
+        equivalent_household_size = (first_adult_weight * 1
+                                     + other_adult_weight * (n_adults - 1)
+                                     + child_weight * n_children)
+    return equivalent_household_size
+
+
+@app.get("/household_percentile")
+def get_household_percentile(income, n_adults, n_children):
+    """Get a household's position in the global income distribution
+    
+    Returns an integer corresponding to the percentile threshold that is
+    right below the household's equivalised income. For example, if the
+    function returns 91, it means that the household earns more than at
+    least 91% of the world's population, and earns less than at least
+    92%.
+    """
+    equivalent_household_size = get_equivalent_household_size(n_adults,
+                                                              n_children)
+    household_income = income / equivalent_household_size
+    household_percentile = get_percentile(household_income)
+    return household_percentile
 
 
 @app.get("/post_donation_percentile")
