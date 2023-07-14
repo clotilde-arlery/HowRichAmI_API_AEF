@@ -20,6 +20,28 @@ def get_percentile(income: int) -> int:
     return percentile
 
 
+def get_equivalent_household_size(n_adults:int, n_children:int) -> float:
+    """Get the equivalent household size
+    
+    Equivalent household size is used to account for economies of scales in a
+    household. Here, the OECD modified scale is used, as it is the one used by
+    INSEE and Eurostat.
+    For more information: https://en.wikipedia.org/wiki/Equivalisation
+    """
+    first_adult_weight = 1
+    other_adult_weight = 0.5
+    child_weight = 0.3
+    
+    if n_adults <= 1:
+        equivalent_household_size = (first_adult_weight * n_adults
+                                     + child_weight * n_children)
+    else:
+        equivalent_household_size = (first_adult_weight * 1
+                                     + other_adult_weight * (n_adults - 1)
+                                     + child_weight * n_children)
+    return equivalent_household_size
+
+
 @app.get("/post_donation_percentile")
 def get_post_donation_percentile(income: int, donation:int):
     """Get the post-donation position in the income distribution"""
