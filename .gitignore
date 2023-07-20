@@ -9,3 +9,10 @@ pyvenv.cfg
 
 # ipython / jupyter
 share/
+
+# R
+.Rproj.user
+.Rproj
+.Rhistory
+.RData
+.Ruserdata
