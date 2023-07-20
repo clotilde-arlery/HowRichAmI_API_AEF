@@ -1,4 +1,16 @@
+# macOS
 .DS_Store
+
+# python virtual environment
+bin/
+lib/
+include/
+pyvenv.cfg
+
+# ipython / jupyter
+share/
+
+# R
 .Rproj.user
 .Rproj
 .Rhistory
